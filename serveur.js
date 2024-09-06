@@ -17,13 +17,13 @@ const transporter = nodemailer.createTransport({
     }
 });
 
-const nexmo = new Nexmo({
-    apiKey: '69ab043d',
-    apiSecret: '0aqWSffrTD6WNPIx'
-});
+// const nexmo = new Nexmo({
+//     apiKey: '69ab043d',
+//     apiSecret: '0aqWSffrTD6WNPIx'
+// });
 
-// Configuration Twilio
-const twilioClient = twilio(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN);
+// // Configuration Twilio
+// const twilioClient = twilio(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN);
 
 // Middleware pour parser les requêtes au format JSON
 app.use(express.json());
@@ -33,10 +33,10 @@ app.post('/sendEmail', (req, res) => {
     const { destinataire, sujet, contenu } = req.body;
 
     const mailOptions = {
-        from: '"Palworld" <' + process.env.GMAIL_EMAIL + '>',
+        from: '"Palworld E-shop" <' + process.env.GMAIL_EMAIL + '>',
         to: destinataire,
         subject: sujet,
-        text: contenu
+        html: contenu
     };
 
     transporter.sendMail(mailOptions, (error, info) => {
@@ -50,25 +50,25 @@ app.post('/sendEmail', (req, res) => {
     });
 });
 
-// Route pour envoyer un SMS
-app.post('/sendSMS', (req, res) => {
-    const { destinataire, message } = req.body;
+// // Route pour envoyer un SMS
+// app.post('/sendSMS', (req, res) => {
+//     const { destinataire, message } = req.body;
 
-    nexmo.message.sendSms(
-        'Vonage APIs', // Votre numéro virtuel Nexmo
-        destinataire,
-        message,
-        (err, responseData) => {
-            if (err) {
-                console.log(err);
-                res.status(500).send('Erreur lors de l\'envoi du SMS');
-            } else {
-                console.log('SMS envoyé avec succès:', responseData);
-                res.status(200).send('SMS envoyé avec succès');
-            }
-        }
-    );
-});
+//     nexmo.message.sendSms(
+//         'Vonage APIs', // Votre numéro virtuel Nexmo
+//         destinataire,
+//         message,
+//         (err, responseData) => {
+//             if (err) {
+//                 console.log(err);
+//                 res.status(500).send('Erreur lors de l\'envoi du SMS');
+//             } else {
+//                 console.log('SMS envoyé avec succès:', responseData);
+//                 res.status(200).send('SMS envoyé avec succès');
+//             }
+//         }
+//     );
+// });
 
 // Démarrage du serveur
 app.listen(PORT, () => {
