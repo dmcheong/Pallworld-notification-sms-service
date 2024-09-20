@@ -6,7 +6,7 @@ const twilio = require('twilio');
 const Nexmo = require('nexmo');
 
 const app = express();
-const PORT = 3011;
+const PORT = process.env.PORT;
 
 // Configuration Nodemailer
 const transporter = nodemailer.createTransport({
